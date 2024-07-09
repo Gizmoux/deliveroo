@@ -75,8 +75,10 @@ const Section = () => {
 			</div>
 			<div className="bg-blue-800 w-full">
 				<h1>Panier</h1>
-				<button>Valider mon panier</button>
-				<div className="p-3 bg-red-900 flex justify-around items-center">
+				<button className="bg-customGreen rounded p-2 m-2">
+					Valider mon panier
+				</button>
+				<div className="p-3 flex justify-around items-center bg-red-700">
 					<div>
 						<button onClick={handleDecrement} className="m-3">
 							-
