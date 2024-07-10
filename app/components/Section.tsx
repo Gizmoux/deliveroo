@@ -9,6 +9,10 @@ const Section = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [restaurant, setRestaurant] = useState({});
 	const [counter, setCounter] = useState(0);
+	const [addMeal, setAddMeal] = useState([]);
+	const foodClick = () => {
+		alert('jambon!');
+	};
 	const handleDecrement = () => {
 		setCounter(counter - 1);
 	};
@@ -58,6 +62,7 @@ const Section = () => {
 									<div
 										key={meal.id}
 										className="bg-slate-500 hover:bg-slate-400 m-4 p-4 rounded-xl"
+										onClick={foodClick}
 									>
 										<p className="text-md">{meal.title}</p>
 										<p className="text-sm">{meal.description}</p>
@@ -88,9 +93,8 @@ const Section = () => {
 							+
 						</button>
 					</div>
-					<div>Brunch vegan</div>
-					<div>Prix</div>
 				</div>
+
 				<h2>Sous-total</h2>
 				<h3>Frais de livraison</h3>
 				<h4>Total</h4>
