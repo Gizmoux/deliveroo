@@ -11,7 +11,7 @@ const Section = () => {
 	const [counter, setCounter] = useState(0);
 	const [addMeal, setAddMeal] = useState([]);
 	const foodClick = () => {
-		alert('jambon!');
+		setAddMeal([]);
 	};
 	const handleDecrement = () => {
 		setCounter(counter - 1);
