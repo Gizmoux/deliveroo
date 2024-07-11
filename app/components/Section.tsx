@@ -8,17 +8,12 @@ const Section = () => {
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [restaurant, setRestaurant] = useState({});
-	const [counter, setCounter] = useState(0);
+	const [quantity, setQuantity] = useState(0);
 	const [addMeal, setAddMeal] = useState([]);
-	const foodClick = () => {
-		setAddMeal([]);
+	const foodClick = (name, price) => {
+		setAddMeal(prevMeals => [...prevMeals, { name, price, quantity: 1 }]);
 	};
-	const handleDecrement = () => {
-		setCounter(counter - 1);
-	};
-	const handleIncrement = () => {
-		setCounter(counter + 1);
-	};
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -62,7 +57,7 @@ const Section = () => {
 									<div
 										key={meal.id}
 										className="bg-slate-500 hover:bg-slate-400 m-4 p-4 rounded-xl"
-										onClick={foodClick}
+										onClick={() => foodClick(meal.title, meal.price)}
 									>
 										<p className="text-md">{meal.title}</p>
 										<p className="text-sm">{meal.description}</p>
@@ -83,20 +78,45 @@ const Section = () => {
 				<button className="bg-customGreen rounded p-2 m-2">
 					Valider mon panier
 				</button>
-				<div className="p-3 flex justify-around items-center bg-red-700">
-					<div>
-						<button onClick={handleDecrement} className="m-3">
-							-
-						</button>
-						{counter}
-						<button onClick={handleIncrement} className="m-3">
-							+
-						</button>
-					</div>
+				<div className="p-1 text-sm flex flex-col justify-start w-full bg-red-700">
+					{addMeal.map((meal, index) => (
+						<div key={index} className="flex items-center m-3">
+							<div>
+								<button
+									onClick={() => {
+										const newMeal = [...addMeal];
+										if (newMeal[index].quantity === 1) {
+											newMeal.splice(index, 1);
+										} else {
+											newMeal[index].quantity--;
+										}
+										setAddMeal(newMeal); // Assurez-vous de mettre à jour l'état après chaque modification
+									}}
+									className="m-1"
+								>
+									-
+								</button>
+								{meal.quantity}
+								<button
+									onClick={() => {
+										const newMeal = [...addMeal];
+										newMeal[index].quantity++;
+										setAddMeal(newMeal); // Assurez-vous de mettre à jour l'état après chaque modification
+									}}
+									className="m-1"
+								>
+									+
+								</button>
+							</div>
+
+							<h1>{meal.name}</h1>
+							<p>{meal.price}€</p>
+						</div>
+					))}
 				</div>
 
 				<h2>Sous-total</h2>
-				<h3>Frais de livraison</h3>
+				<h3>Frais de livraison: 2,90€</h3>
 				<h4>Total</h4>
 			</div>
 		</div>
