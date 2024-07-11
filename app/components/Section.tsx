@@ -8,6 +8,7 @@ const Section = () => {
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [restaurant, setRestaurant] = useState({});
+	const [total, setTotal] = useState(0);
 	const [quantity, setQuantity] = useState(0);
 	const [addMeal, setAddMeal] = useState([]);
 	const foodClick = (name, price) => {
@@ -33,6 +34,18 @@ const Section = () => {
 
 		fetchData();
 	}, []);
+	useEffect(() => {
+		const calculateTotal = () => {
+			const subtotal = addMeal.reduce(
+				(acc, meal) => acc + meal.price * meal.quantity,
+				0
+			);
+			const deliveryFee = 2.9;
+			setTotal(subtotal + deliveryFee);
+		};
+
+		calculateTotal();
+	}, [addMeal]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -117,7 +130,7 @@ const Section = () => {
 
 				<h2>Sous-total</h2>
 				<h3>Frais de livraison: 2,90€</h3>
-				<h4>Total</h4>
+				<h4> {total.toFixed(2)}</h4>
 			</div>
 		</div>
 	);
